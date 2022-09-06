@@ -44,8 +44,8 @@ resource "aws_lb_target_group" "alb" {
 }
 
 # Listener (redirects traffic from the load balancer to the target group)
-resource "aws_lb_listener" "alb_http" {
-  count             = var.create_alb ? 1 : 0
+resource "aws_lb_listener" "alb_http_redirect" {
+  count             = var.create_alb && var.http_redirect == "yes" ? 1 : 0
   load_balancer_arn = aws_lb.alb[0].id
   port              = "80"
   protocol          = "HTTP"
@@ -63,8 +63,22 @@ resource "aws_lb_listener" "alb_http" {
   }
 }
 
+resource "aws_lb_listener" "alb_http" {
+  count             = var.create_alb && var.http_redirect == "false" ? 1 : 0
+  load_balancer_arn = aws_lb.alb[0].id
+  port              = "80"
+  protocol          = "HTTP"
+
+  depends_on = [aws_lb_target_group.alb]
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb[0].arn
+  }
+}
+
 resource "aws_lb_listener" "alb_https" {
-  count             = var.create_alb ? 1 : 0
+  count             = var.create_alb && var.certificate_arn != "" && var.http_redirect == "yes" ? 1 : 0
   load_balancer_arn = aws_lb.alb[0].id
   port              = "443"
   protocol          = "HTTPS"

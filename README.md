@@ -28,6 +28,7 @@ No modules.
 | [aws_lb.glb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
 | [aws_lb.nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
 | [aws_lb_listener.alb_http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_listener.alb_http_redirect](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_listener.alb_https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_listener.glb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_listener.nlb_ssl](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
@@ -51,6 +52,7 @@ No modules.
 | <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | Health check path for the default target group | `string` | `"/"` | no |
 | <a name="input_health_check_port"></a> [health\_check\_port](#input\_health\_check\_port) | Health check port | `string` | `"traffic-port"` | no |
 | <a name="input_health_check_protocol"></a> [health\_check\_protocol](#input\_health\_check\_protocol) | Health check protocol | `string` | `"TCP"` | no |
+| <a name="input_http_redirect"></a> [http\_redirect](#input\_http\_redirect) | whether redirect http to https | `string` | `"yes"` | no |
 | <a name="input_is_internal"></a> [is\_internal](#input\_is\_internal) | Creates external or internal load balancer | `string` | `"no"` | no |
 | <a name="input_lb_access_logs_prefix"></a> [lb\_access\_logs\_prefix](#input\_lb\_access\_logs\_prefix) | Load Balancer access logs prefix | `string` | `"ALB"` | no |
 | <a name="input_lb_name"></a> [lb\_name](#input\_lb\_name) | Load Balancer Name | `string` | `""` | no |
@@ -59,10 +61,6 @@ No modules.
 | <a name="input_nlb_listener_port"></a> [nlb\_listener\_port](#input\_nlb\_listener\_port) | NLB Listener port | `string` | `"443"` | no |
 | <a name="input_nlb_listener_protocol"></a> [nlb\_listener\_protocol](#input\_nlb\_listener\_protocol) | NLB Listener Protocol | `string` | `"TLS"` | no |
 | <a name="input_nlb_ssl_policy"></a> [nlb\_ssl\_policy](#input\_nlb\_ssl\_policy) | NLB SSL policy for TLS protocol | `string` | `"ELBSecurityPolicy-TLS-1-2-Ext-2018-06"` | no |
-| <a name="input_tag_application"></a> [tag\_application](#input\_tag\_application) | Application tag | `string` | n/a | yes |
-| <a name="input_tag_cost_center"></a> [tag\_cost\_center](#input\_tag\_cost\_center) | Cost Center ID | `string` | n/a | yes |
-| <a name="input_tag_key_contact"></a> [tag\_key\_contact](#input\_tag\_key\_contact) | Key contact person | `string` | n/a | yes |
-| <a name="input_tag_parent_project"></a> [tag\_parent\_project](#input\_tag\_parent\_project) | Parent Project | `string` | n/a | yes |
 | <a name="input_target_group_name"></a> [target\_group\_name](#input\_target\_group\_name) | Name of the Load Balancer Target Group | `string` | `""` | no |
 | <a name="input_target_group_port"></a> [target\_group\_port](#input\_target\_group\_port) | Port on which targets receive traffic | `number` | `null` | no |
 | <a name="input_target_group_protocol"></a> [target\_group\_protocol](#input\_target\_group\_protocol) | Protocol to use for routing traffic to the targets. | `string` | `""` | no |

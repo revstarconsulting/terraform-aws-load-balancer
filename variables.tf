@@ -140,56 +140,19 @@ variable "target_group_resource_ids" {
   default     = []
 }
 
+variable "http_redirect" {
+  description = "whether redirect http to https"
+  type        = string
+  default     = "yes"
+}
+
 variable "environment" {
   description = "Provide appropriate environment name"
   type        = string
-
-  validation {
-    condition = contains([
-      "dev",
-      "development",
-      "uat",
-      "production",
-      "prod",
-      "sandbox",
-      "transit",
-      "vault",
-      "shared"
-    ], var.environment)
-
-    error_message = "The environment value is not valid. Valid values are dev/development/uat/prod/production/sandbox/transit/vault/shared."
-  }
 }
-
-
-variable "tag_application" {
-  description = "Application tag"
-  type        = string
-
-}
-
-variable "tag_parent_project" {
-  description = "Parent Project"
-  type        = string
-}
-
-variable "tag_cost_center" {
-  description = "Cost Center ID"
-  type        = string
-}
-
-variable "tag_key_contact" {
-  description = "Key contact person"
-  type        = string
-}
-
 
 locals {
   common_tags = {
-    Application    = var.tag_application
-    Parent_Project = var.tag_parent_project
-    Cost_Center_ID = var.tag_cost_center
-    Key_Contact    = var.tag_key_contact
-    environment    = var.environment
+    environment = var.environment
   }
 }
