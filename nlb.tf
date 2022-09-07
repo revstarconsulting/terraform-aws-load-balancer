@@ -28,19 +28,30 @@ resource "aws_lb_target_group" "nlb" {
   depends_on = [aws_lb.nlb]
 
   health_check {
-    path                = var.health_check_path
     port                = var.health_check_port
-    healthy_threshold   = 5
-    unhealthy_threshold = 2
-    timeout             = 10
-    interval            = 30
-    matcher             = "200,403,404,400,401,301,302"
+    protocol            = "TCP"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    interval            = 15
+  }
+}
+
+resource "aws_lb_listener" "nlb" {
+  count             = var.create_nlb && var.certificate_arn == "" ? 1 : 0
+  load_balancer_arn = element(aws_lb.nlb.*.id, count.index)
+  port              = 80
+  protocol          = "TCP"
+  depends_on        = [aws_lb_target_group.nlb]
+
+  default_action {
+    type             = "forward"
+    target_group_arn = element(aws_lb_target_group.nlb.*.arn, count.index)
   }
 }
 
 resource "aws_lb_listener" "nlb_ssl" {
-  count             = var.create_nlb ? 1 : 0
-  load_balancer_arn = aws_lb.nlb[0].id
+  count             = var.create_nlb && var.certificate_arn != "" ? 1 : 0
+  load_balancer_arn = element(aws_lb.nlb.*.id, count.index)
   port              = var.nlb_listener_port
   protocol          = var.nlb_listener_protocol
   ssl_policy        = var.nlb_ssl_policy
@@ -49,6 +60,6 @@ resource "aws_lb_listener" "nlb_ssl" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.nlb[0].arn
+    target_group_arn = element(aws_lb_target_group.nlb.*.arn, count.index)
   }
 }

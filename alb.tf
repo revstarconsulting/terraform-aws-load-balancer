@@ -64,7 +64,7 @@ resource "aws_lb_listener" "alb_http_redirect" {
 }
 
 resource "aws_lb_listener" "alb_http" {
-  count             = var.create_alb && var.http_redirect == "false" ? 1 : 0
+  count             = var.create_alb && var.http_redirect == "no" ? 1 : 0
   load_balancer_arn = aws_lb.alb[0].id
   port              = "80"
   protocol          = "HTTP"

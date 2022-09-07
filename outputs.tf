@@ -4,7 +4,7 @@ output "alb_arn" {
 }
 output "alb_target_group_arn" {
   description = "ALB Target Group ARN"
-  value       = aws_lb_target_group.alb.*.arn
+  value       = one(aws_lb_target_group.alb.*.arn)
 }
 
 output "alb_security_group_id" {
@@ -28,7 +28,7 @@ output "nlb_arn" {
 }
 output "nlb_target_group_arn" {
   description = "NLB Target Group ARN"
-  value       = aws_lb_target_group.nlb.*.arn
+  value       = one(aws_lb_target_group.nlb.*.arn)
 }
 
 output "glb_arn" {
