@@ -22,24 +22,52 @@ resource "aws_lb" "alb" {
 
 # Target group
 resource "aws_lb_target_group" "alb" {
-  count       = var.create_alb ? 1 : 0
-  name        = var.target_group_name
-  port        = var.target_group_port
-  protocol    = var.target_group_protocol
+  for_each = var.alb_target_groups
+
+  name        = each.value.target_group_name
+  port        = each.value.target_group_port
+  protocol    = each.value.target_group_protocol
   vpc_id      = var.vpc_id
-  target_type = var.target_type
+  target_type = lookup(each.value.target_type, "ip")
 
   tags       = local.common_tags
   depends_on = [aws_lb.alb]
 
   health_check {
-    path                = var.health_check_path
-    port                = var.health_check_port
+    path                = lookup(each.value.health_check_path, "/")
+    port                = lookup(each.value.health_check_port, "traffic-port")
     healthy_threshold   = 5
     unhealthy_threshold = 2
     timeout             = 10
     interval            = 30
     matcher             = "200,403,404,400,401,301,302"
+  }
+}
+
+# ALB rule
+
+resource "aws_lb_listener_rule" "this" {
+  for_each     = var.alb_listener_rules
+  listener_arn = var.create_alb && var.http_redirect == "no" ? one(aws_lb_listener.alb_http.*.arn) : one(aws_lb_listener.alb_https.*.arn)
+  priority     = each.value.priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb[each.key].arn
+  }
+
+  dynamic "condition" {
+    for_each = each.value.conditions
+    content {
+      path_pattern {
+        values = condition.values.path_patterns
+      }
+
+      # host_header {
+      #   values = ["example.com"]
+      # }
+    }
+
   }
 }
 

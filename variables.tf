@@ -151,6 +151,18 @@ variable "environment" {
   type        = string
 }
 
+variable "alb_target_groups" {
+  type        = any
+  description = "map of target groups to be attached to alb"
+  default     = {}
+}
+
+variable "alb_listener_rules" {
+  type        = any
+  description = "map of listener rules"
+  default     = {}
+}
+
 locals {
   common_tags = {
     environment = var.environment
