@@ -47,7 +47,7 @@ resource "aws_lb_target_group" "alb" {
 # ALB rule
 
 resource "aws_lb_listener_rule" "this" {
-  for_each     = var.alb_listener_rules
+  for_each     = var.alb_target_groups
   listener_arn = var.create_alb && var.http_redirect == "no" ? one(aws_lb_listener.alb_http.*.arn) : one(aws_lb_listener.alb_https.*.arn)
   priority     = each.value.priority
 
