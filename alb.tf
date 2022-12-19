@@ -56,10 +56,10 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   dynamic "condition" {
-    for_each = split(".", each.key)[1] == "gateway" ? each.key.conditions : []
+    for_each = each.value.enable_alb == "yes" ? [1] : []
     content {
       path_pattern {
-        values = condition.values.path_patterns
+        values = condition.value.path_patterns
       }
     }
 
