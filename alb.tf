@@ -28,14 +28,14 @@ resource "aws_lb_target_group" "alb" {
   port        = lookup(each.value, "target_group_port", var.target_group_port)
   protocol    = lookup(each.value, "target_group_protocol", var.target_group_protocol)
   vpc_id      = var.vpc_id
-  target_type = lookup(each.value.target_type, "ip")
+  target_type = lookup(each.value, "target_type", "ip")
 
   tags       = local.common_tags
   depends_on = [aws_lb.alb]
 
   health_check {
-    path                = lookup(each.value.health_check_path, "/")
-    port                = lookup(each.value.health_check_port, "traffic-port")
+    path                = lookup(each.value, "health_check_path", "/")
+    port                = lookup(each.value, "health_check_port", "traffic-port")
     healthy_threshold   = 5
     unhealthy_threshold = 2
     timeout             = 10
