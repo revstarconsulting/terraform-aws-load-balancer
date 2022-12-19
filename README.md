@@ -66,8 +66,8 @@ No modules.
 | <a name="input_nlb_listener_protocol"></a> [nlb\_listener\_protocol](#input\_nlb\_listener\_protocol) | NLB Listener Protocol | `string` | `"TLS"` | no |
 | <a name="input_nlb_ssl_policy"></a> [nlb\_ssl\_policy](#input\_nlb\_ssl\_policy) | NLB SSL policy for TLS protocol | `string` | `"ELBSecurityPolicy-TLS-1-2-Ext-2018-06"` | no |
 | <a name="input_target_group_name"></a> [target\_group\_name](#input\_target\_group\_name) | Name of the Load Balancer Target Group | `string` | `""` | no |
-| <a name="input_target_group_port"></a> [target\_group\_port](#input\_target\_group\_port) | Port on which targets receive traffic | `number` | `null` | no |
-| <a name="input_target_group_protocol"></a> [target\_group\_protocol](#input\_target\_group\_protocol) | Protocol to use for routing traffic to the targets. | `string` | `""` | no |
+| <a name="input_target_group_port"></a> [target\_group\_port](#input\_target\_group\_port) | Port on which targets receive traffic | `number` | `3000` | no |
+| <a name="input_target_group_protocol"></a> [target\_group\_protocol](#input\_target\_group\_protocol) | Protocol to use for routing traffic to the targets. | `string` | `"HTTP"` | no |
 | <a name="input_target_group_resource_ids"></a> [target\_group\_resource\_ids](#input\_target\_group\_resource\_ids) | IDs of the target to attach with target group. | `list(string)` | `[]` | no |
 | <a name="input_target_type"></a> [target\_type](#input\_target\_type) | Type of target to register targets with target group. Valid values are `instance` or `ip`. | `string` | `"ip"` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | vpc\_id | `string` | n/a | yes |

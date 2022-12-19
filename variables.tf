@@ -119,13 +119,13 @@ variable "nlb_listener_protocol" {
 variable "target_group_protocol" {
   description = "Protocol to use for routing traffic to the targets."
   type        = string
-  default     = ""
+  default     = "HTTP"
 }
 
 variable "target_group_port" {
   description = "Port on which targets receive traffic"
   type        = number
-  default     = null
+  default     = 3000
 }
 
 variable "target_type" {
