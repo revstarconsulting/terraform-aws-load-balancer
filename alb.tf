@@ -56,7 +56,7 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   dynamic "condition" {
-    for_each = each.value.conditions
+    for_each = split(".", each.key)[1] == "gateway" ? each.key.conditions : []
     content {
       path_pattern {
         values = condition.values.path_patterns
