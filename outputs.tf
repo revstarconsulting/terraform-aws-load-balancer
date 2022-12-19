@@ -4,7 +4,7 @@ output "alb_arn" {
 }
 output "alb_target_group_arn" {
   description = "ALB Target Group ARN"
-  value       = aws_lb_target_group.alb.*.arn
+  value       = aws_lb_target_group.alb.*.id
 }
 
 output "alb_security_group_id" {

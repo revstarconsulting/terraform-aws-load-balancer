@@ -56,7 +56,7 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   dynamic "condition" {
-    for_each = each.value.enable_alb == "yes" ? [1] : []
+    for_each = each.value.enable_alb == "yes" ? each.value.conditions : []
     content {
       path_pattern {
         values = condition.value.path_patterns
